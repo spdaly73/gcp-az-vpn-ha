@@ -21,4 +21,4 @@ This script has been tested with the following provider/module versions:
 - See terraform.tfvars for the variable set. I've set some defaults where appropriate, but feel free to modify variables as needed to suit your network build needs for your particular environment.
 
 #### Version - This Script
-= v0.1
+- Current: v0.1
