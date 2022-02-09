@@ -26,7 +26,7 @@ This script has been tested with the following provider/module versions:
 - /README.md: The file that you're reading right now.
 
 #### Usage
-- See terraform.tfvars for the variable set, in which I think should be fairly self-explanitory. I've set some defaults where appropriate, but feel free to modify variables as needed to suit your network build needs for your particular environment.
+- See terraform.tfvars for the variable set, in which I think should be fairly self-explanitory. I've set some defaults where appropriate, but feel free to modify variables as needed to suit your network build for your particular environment.
 
 #### Outputs
 - gcp_pubip0: GCP Public IP of Tunnel0
