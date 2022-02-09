@@ -10,10 +10,13 @@ I'm still very much a novice (IMO) when it comes to Terraform, so if you see som
 - I don't include any means to authenticate to your particular cloud environments. The assumption is you'll add any required credentials to the script.
 
 #### Compatibility
-This script has been tested with the following provider versions:
-Azurerm -- >= 2.91, <= 2.95
-Google, Google-beta -- v4.10
-Random (for secret key generation) -- v3.1
+This script has been tested with the following provider/module versions:
+- Azurerm: >= 2.91, <= 2.95
+- Google, Google-beta: = 4.10
+- Random (for secret key generation): = 3.1
+- terraform-google-modules/modules/vpn_ha: = 2.2  https://github.com/terraform-google-modules/terraform-google-vpn/tree/master/modules/vpn_ha
+
+
 
 #### Usage
 - See terraform.tfvars for the variable set. I've set some defaults where appropriate, but feel free to modify variables as needed to suit your network build needs for your particular environment.
