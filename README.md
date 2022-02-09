@@ -12,7 +12,7 @@ I'm still very much a novice (IMO) when it comes to Terraform, so if you see som
 #### Compatibility
 This script has been tested with the following provider/module versions:
 - Terraform: = 1.1.3
-- Azurerm: >= 2.91, <= 2.95
+- Azurerm: >= 2.91, <= 2.93  (do not use any version above 2.93 for now, it breaks the script. I need to do more digging on why this is happening with the current versions...)
 - Google, Google-beta: = 4.10
 - Random (for shared secret generation): = 3.1
 - terraform-google-modules/modules/vpn_ha: = 2.2  https://github.com/terraform-google-modules/terraform-google-vpn/tree/master/modules/vpn_ha
