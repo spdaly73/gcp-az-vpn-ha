@@ -13,7 +13,7 @@ I'm still very much a novice (IMO) when it comes to Terraform, so if you see som
 This script has been tested with the following provider/module versions:
 - Azurerm: >= 2.91, <= 2.95
 - Google, Google-beta: = 4.10
-- Random (for secret key generation): = 3.1
+- Random (for shared secret generation): = 3.1
 - terraform-google-modules/modules/vpn_ha: = 2.2  https://github.com/terraform-google-modules/terraform-google-vpn/tree/master/modules/vpn_ha
 
 
