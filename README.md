@@ -8,4 +8,12 @@ I'm still very much a novice (IMO) when it comes to Terraform, so if you see som
 - Given that GCP builds a default auto mode VPC, but Azure really doesn't have a comparable feature, this script assumes we're connecting to the "default" GCP VPC, while we build an Azure Resource Group and VNET in the same script. If you want to connect something else besides the "default" VPC, this can be modified with the "gcp_network" variable, but the network must be already defined in your GCP project. I may change this behavior in a later version, but this is the expected behavior for now.
 - BGP is enabled and we dynamically echange all available CIDRs between VPC and VNET.
 - I don't include any means to authenticate to your particular cloud environments. The assumption is you'll add any required credentials to the script.
+
+#### Compatibility
+This script has been tested with the following provider versions:
+Azurerm -- >= 2.91, <= 2.95
+Google, Google-beta -- v4.10
+Random (for secret key generation) -- v3.1
+
+#### Usage
 - See terraform.tfvars for the variable set. I've set some defaults where appropriate, but feel free to modify variables as needed to suit your network build needs for your particular environment.
