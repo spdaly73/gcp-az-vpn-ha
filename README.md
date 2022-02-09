@@ -21,10 +21,19 @@ This script has been tested with the following provider/module versions:
 - /providers.tf: Provider blocks.
 - /variables.tf: Variable definitions.
 - /main.tf: Primary script.
+- /outputs.tf: Yes, as a matter of fact, output definitions live here.
 - /terraform.tfvars: User-defined variables.
+- /README.md: The file that you're reading right now.
 
 #### Usage
 - See terraform.tfvars for the variable set, in which I think should be fairly self-explanitory. I've set some defaults where appropriate, but feel free to modify variables as needed to suit your network build needs for your particular environment.
+
+#### Outputs
+- gcp_pubip0: GCP Public IP of Tunnel0
+- gcp_pubip1: GCP Public IP of Tunnel1
+- az_pubip0: Azure Public IP of Tunnel0
+- az_pubip1: Azure Public IP of Tunnel1
+- shared_key: Shared key used to authenticate tunnels (sensitive=true)
 
 #### Version - This Script
 - Current: v0.1
