@@ -17,7 +17,8 @@ This script has been tested with the following provider/module versions:
 - Random (for shared secret generation): = 3.1
 - terraform-google-modules/modules/vpn_ha: = 2.2  https://github.com/terraform-google-modules/terraform-google-vpn/tree/master/modules/vpn_ha
 
-
-
 #### Usage
 - See terraform.tfvars for the variable set. I've set some defaults where appropriate, but feel free to modify variables as needed to suit your network build needs for your particular environment.
+
+#### Version
+= v0.1
