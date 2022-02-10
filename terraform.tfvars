@@ -32,8 +32,6 @@ az_location = "westus2"
 az_vnet_name = "my_vnet1"
 az_vnet_summaries = ["10.1.0.0/16"]
 az_gateway_subnet = ["10.1.0.0/24"]
-//az_gateway_pubip0_name = "gateway_pubip0"
-//az_gateway_pubip1_name = "gateway-pubip1"
 az_vnet_gateway_name = "vnet_gateway"
 az_bgp_asn = 65515
 
