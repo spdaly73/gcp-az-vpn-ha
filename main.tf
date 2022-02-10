@@ -11,27 +11,27 @@ locals {
 # so leaving that out, but resulting keys should be
 # a 'reasonable' random mix of letters and numbers
 resource "random_string" "random_key1" {
-  length = 32
-  upper = true
+  length  = 32
+  upper   = true
   special = false
-  number = true
+  number  = true
 }
 
 # GCP Resources
 module "vpn_ha" {
-  source = "terraform-google-modules/vpn/google//modules/vpn_ha"
-  project_id  = var.gcp_project_id
-  region  = var.gcp_region
-  network = var.gcp_network
-  name            = var.gcp_gateway_name
+  source     = "terraform-google-modules/vpn/google//modules/vpn_ha"
+  project_id = var.gcp_project_id
+  region     = var.gcp_region
+  network    = var.gcp_network
+  name       = var.gcp_gateway_name
   peer_external_gateway = {
     redundancy_type = "TWO_IPS_REDUNDANCY"
     interfaces = [{
-      id = 0
+      id         = 0
       ip_address = data.azurerm_public_ip.az_data_pubip0.ip_address
 
-    }, {
-      id = 1
+      }, {
+      id         = 1
       ip_address = data.azurerm_public_ip.az_data_pubip1.ip_address
     }]
   }
@@ -42,12 +42,12 @@ module "vpn_ha" {
         address = var.az_bgp_apipa_ip0[0] // There should be only one IP in this list for our purpose
         asn     = var.az_bgp_asn
       }
-      bgp_peer_options  = null
-      bgp_session_range = var.gcp_bgp_apipa_ip_nm0
-      ike_version       = 2
-      vpn_gateway_interface = 0
+      bgp_peer_options                = null
+      bgp_session_range               = var.gcp_bgp_apipa_ip_nm0
+      ike_version                     = 2
+      vpn_gateway_interface           = 0
       peer_external_gateway_interface = 0
-      shared_secret = local.secret_key
+      shared_secret                   = local.secret_key
 
     }
     remote-1 = {
@@ -55,12 +55,12 @@ module "vpn_ha" {
         address = var.az_bgp_apipa_ip1[0] // There should be only one IP in this list for our purpose
         asn     = var.az_bgp_asn
       }
-      bgp_peer_options  = null
-      bgp_session_range = var.gcp_bgp_apipa_ip_nm1
-      ike_version       = 2
-      vpn_gateway_interface = 1
+      bgp_peer_options                = null
+      bgp_session_range               = var.gcp_bgp_apipa_ip_nm1
+      ike_version                     = 2
+      vpn_gateway_interface           = 1
       peer_external_gateway_interface = 1
-      shared_secret = local.secret_key
+      shared_secret                   = local.secret_key
     }
   }
 }
@@ -90,19 +90,19 @@ resource "azurerm_subnet" "azrm_gateway_subnet" {
 }
 
 resource "azurerm_public_ip" "az_gateway_pubip" {
-  count = 2
+  count               = 2
   name                = "az_gateway_pubip${count.index}"
   location            = azurerm_resource_group.az_rg1.location
   resource_group_name = azurerm_resource_group.az_rg1.name
-  allocation_method = "Dynamic"
+  allocation_method   = "Dynamic"
 }
 
 resource "azurerm_virtual_network_gateway" "az_vnet_gateway1" {
   name                = var.az_vnet_gateway_name
   location            = azurerm_resource_group.az_rg1.location
   resource_group_name = azurerm_resource_group.az_rg1.name
-  type     = "Vpn"
-  vpn_type = "RouteBased"
+  type                = "Vpn"
+  vpn_type            = "RouteBased"
 
   active_active = true
   enable_bgp    = true
@@ -112,11 +112,11 @@ resource "azurerm_virtual_network_gateway" "az_vnet_gateway1" {
     asn = var.az_bgp_asn
     peering_addresses {
       ip_configuration_name = "az_gateway_ip0"
-      apipa_addresses = var.az_bgp_apipa_ip0
+      apipa_addresses       = var.az_bgp_apipa_ip0
     }
     peering_addresses {
       ip_configuration_name = "az_gateway_ip1"
-      apipa_addresses = var.az_bgp_apipa_ip1
+      apipa_addresses       = var.az_bgp_apipa_ip1
     }
 
   }
@@ -135,7 +135,7 @@ resource "azurerm_virtual_network_gateway" "az_vnet_gateway1" {
 }
 
 resource "azurerm_local_network_gateway" "az_peer_gtway" {
-  count = 2
+  count               = 2
   name                = "${var.gcp_gateway_name}-peer${count.index}"
   resource_group_name = azurerm_resource_group.az_rg1.name
   location            = azurerm_resource_group.az_rg1.location
@@ -153,14 +153,14 @@ resource "azurerm_local_network_gateway" "az_peer_gtway" {
 }
 
 resource "azurerm_virtual_network_gateway_connection" "gtway_connection" {
-  count = 2
-  name                = "To-${var.gcp_gateway_name}-${count.index}"
-  location            = azurerm_resource_group.az_rg1.location
-  resource_group_name = azurerm_resource_group.az_rg1.name
+  count                      = 2
+  name                       = "To-${var.gcp_gateway_name}-${count.index}"
+  location                   = azurerm_resource_group.az_rg1.location
+  resource_group_name        = azurerm_resource_group.az_rg1.name
   type                       = "IPsec"
   virtual_network_gateway_id = azurerm_virtual_network_gateway.az_vnet_gateway1.id
   local_network_gateway_id   = azurerm_local_network_gateway.az_peer_gtway[count.index].id
-  shared_key = local.secret_key
+  shared_key                 = local.secret_key
 
   enable_bgp = true
 
@@ -187,13 +187,13 @@ resource "azurerm_virtual_network_gateway_connection" "gtway_connection" {
 // waits until the VNET gateway is built, THEN extracts the IP's from
 // resource once assigned. Whew!
 data "azurerm_public_ip" "az_data_pubip0" {
-  name = azurerm_public_ip.az_gateway_pubip[0].name
+  name                = azurerm_public_ip.az_gateway_pubip[0].name
   resource_group_name = azurerm_resource_group.az_rg1.name
-  depends_on = [azurerm_virtual_network_gateway.az_vnet_gateway1]
+  depends_on          = [azurerm_virtual_network_gateway.az_vnet_gateway1]
 }
 
 data "azurerm_public_ip" "az_data_pubip1" {
-  name = azurerm_public_ip.az_gateway_pubip[1].name
+  name                = azurerm_public_ip.az_gateway_pubip[1].name
   resource_group_name = azurerm_resource_group.az_rg1.name
-  depends_on = [azurerm_virtual_network_gateway.az_vnet_gateway1]
+  depends_on          = [azurerm_virtual_network_gateway.az_vnet_gateway1]
 }

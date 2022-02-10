@@ -4,7 +4,7 @@
 variable "gcp_project_id" {
   description = "GCP Project ID"
   type        = string
-  nullable = false
+  nullable    = false
 }
 
 variable "gcp_cloud_router" {
@@ -50,64 +50,64 @@ variable "gcp_tunnel_name" {
 variable "tunnel_shared_secret" {
   description = "Shared Secret"
   type        = string
-  default = ""
-  nullable = true
+  default     = ""
+  nullable    = true
 }
 
 # Azure Specific Input Variables
 variable "az_resource_group_name" {
   description = "Azure Resource Group Name"
   type        = string
-  default = "az_rg1"
+  default     = "az_rg1"
 }
 
 variable "az_location" {
   description = "Azure Location"
   type        = string
-  default = "westus2"
+  default     = "westus2"
 }
 
 variable "az_vnet_name" {
   description = "Azure VNET Name"
   type        = string
-  default = "test"
+  default     = "test"
 }
 
 variable "az_vnet_gateway_name" {
   description = "Azure VNET Gateway Name"
   type        = string
-  default = "VNET_Gateway"
+  default     = "VNET_Gateway"
 }
 variable "az_vnet_gateway_sku" {
   description = "Azure VNET Gateway SKU"
   type        = string
-  default = "VpnGw1"
+  default     = "VpnGw1"
 }
 variable "az_vnet_summaries" {
   description = "Azure VNET Address Space"
-  type        = list
+  type        = list(any)
   default     = ["10.0.0.0/16"]
 }
 
 variable "az_gateway_subnet" {
   description = "Azure Gateway Subnet"
-  type        = list
+  type        = list(any)
   default     = ["10.0.0.0/24"]
 }
 
 variable "az_bgp_asn" {
   description = "Azure BGP ASN"
   type        = number
-  default = 65515
+  default     = 65515
 }
 variable "az_bgp_apipa_ip0" {
   description = "Azure BGP APIPA - first tunnel"
-  type        = list
+  type        = list(any)
 }
 
 variable "az_bgp_apipa_ip1" {
   description = "Azure BGP APIPA - second tunnel"
-  type        = list
+  type        = list(any)
 }
 
 variable "gcp_bgp_apipa_ip_nm0" {
@@ -122,5 +122,5 @@ variable "gcp_bgp_apipa_ip_nm1" {
 
 variable "az_bgp_remote_apipa_ip" {
   description = "Azure Remote VPN IP"
-  type        = list
+  type        = list(any)
 }

@@ -9,17 +9,17 @@ output "gcp_pubip1" {
 }
 
 output "az_pubip0" {
-  value       =  data.azurerm_public_ip.az_data_pubip0.ip_address
+  value       = data.azurerm_public_ip.az_data_pubip0.ip_address
   description = "Azure Public IP of Tunnel0"
 }
 
 output "az_pubip1" {
-  value       =  data.azurerm_public_ip.az_data_pubip1.ip_address
+  value       = data.azurerm_public_ip.az_data_pubip1.ip_address
   description = "Azure Public IP of Tunnel1"
 }
 
 output "shared_key" {
-  value       =  local.secret_key
+  value       = local.secret_key
   description = "Shared Key for Tunnels"
-  sensitive = true
+  sensitive   = true
 }
