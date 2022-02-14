@@ -12,7 +12,7 @@ I'm still very much a novice (IMO) when it comes to Terraform, so if you see som
 #### Compatibility
 This script has been tested with the following provider/module versions:
 - Terraform: = 1.1.3
-- Azurerm: >= 2.91, <= 2.93  (do not use any version above 2.93 for now, it breaks the script. I need to do more digging on why this is happening with the current versions...)
+- Azurerm: = 2.91, = 2.93, = 2.96  (do not use with 2.95, the script breaks with this version)
 - Google, Google-beta: = 4.10
 - Random (for shared secret generation): = 3.1
 - terraform-google-modules/modules/vpn_ha: = 2.2  https://github.com/terraform-google-modules/terraform-google-vpn/tree/master/modules/vpn_ha
@@ -36,7 +36,8 @@ This script has been tested with the following provider/module versions:
 - shared_key: Shared key used to authenticate tunnels (sensitive=true)
 
 #### Version - This Script
-- Current: v0.1
+- Current: v0.1.1 - sucessfully tested with AzureRM 2.96, so this provider version has been updated
+- v0.1 - original script
 
 #### Misc
 I'm a little surpised that I didn't find an Azure VPN module in the Terraform Registry, so I'm considering creating one for my next 'project'. For now, I'm using base Azure RM resource blocks; see comments in main.tf for further banter/nonsense.
