@@ -1,5 +1,5 @@
 // GCP Specific VARs
-gcp_project_id = "optimum-battery-285721"
+gcp_project_id = "your-project-id-goes-here"
 gcp_region     = "us-west1"
 gcp_zone       = "us-west1-b"
 // we're assuming this VPC has already been created...
