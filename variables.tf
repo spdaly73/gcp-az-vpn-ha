@@ -47,6 +47,30 @@ variable "gcp_tunnel_name" {
   default     = "gcp-tunnel1"
 }
 
+variable "gcp_build_vpc" {
+  description = "Build GCP VPC?"
+  type        = bool
+  default     = false
+}
+
+variable "gcp_auto_create_subnetworks" {
+  description = "Auto-create Subnetworks?"
+  type        = bool
+  default     = true
+}
+
+variable "gcp_subnetworks" {
+  description = "GCP Subnetworks Map (Region = Subnet)"
+  type        = map(string)
+  default = { }
+}
+
+variable "gcp_routing_mode" {
+  description = "GCP Routing Mode REGIONAL/GLOBAL"
+  type        = string
+  default     = "REGIONAL"
+}
+
 variable "tunnel_shared_secret" {
   description = "Shared Secret"
   type        = string

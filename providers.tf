@@ -8,7 +8,7 @@ terraform {
     }
     azurerm = {
       source  = "hashicorp/azurerm"
-      version = "= 2.93.0" // do not use any newer version. It breaks the script...
+      version = ">= 2.96.0" // do not use 2.95, apply errors in testing
     }
     random = {
       source  = "hashicorp/random"
@@ -21,7 +21,7 @@ terraform {
 provider "google" {
   // if using a keyfile to authenticate to Google, you can uncomment below
   // and point to your valid file
-  //credentials = file("keys/key1.json")
+  // credentials = file("keys/key1.json")
   project = var.gcp_project_id
   region  = var.gcp_region
   zone    = var.gcp_zone
@@ -29,7 +29,7 @@ provider "google" {
 provider "google-beta" {
   // if using a keyfile to authenticate to Google, you can uncomment below
   // and point to your valid file
-  //credentials = file("keys/key1.json")
+  // credentials = file("keys/key1.json")
   project = var.gcp_project_id
   region  = var.gcp_region
   zone    = var.gcp_zone

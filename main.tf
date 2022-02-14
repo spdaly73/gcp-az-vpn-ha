@@ -3,6 +3,7 @@
 // but we only have one ...
 locals {
   secret_key = var.tunnel_shared_secret != "" ? var.tunnel_shared_secret : random_string.random_key1.id
+
 }
 
 # Random String Resource
@@ -17,8 +18,25 @@ resource "random_string" "random_key1" {
   number  = true
 }
 
-# GCP Resources
+resource "google_compute_network" "vpc_network1" {
+  count = var.gcp_build_vpc ? 1 : 0
+  name                    = var.gcp_network
+  auto_create_subnetworks = var.gcp_auto_create_subnetworks
+  routing_mode = var.gcp_routing_mode
+  // mtu                     = 1460
+}
+
+resource "google_compute_subnetwork" "custom_subnets1" {
+  for_each = var.gcp_subnetworks
+  name          = "${each.key}-subnet"
+  ip_cidr_range = each.value
+  region        = each.key
+  network       = google_compute_network.vpc_network1[0].id
+}
+
+
 module "vpn_ha" {
+  depends_on = [data.google_compute_network.myvpc]
   source     = "terraform-google-modules/vpn/google//modules/vpn_ha"
   project_id = var.gcp_project_id
   region     = var.gcp_region
@@ -196,4 +214,8 @@ data "azurerm_public_ip" "az_data_pubip1" {
   name                = azurerm_public_ip.az_gateway_pubip[1].name
   resource_group_name = azurerm_resource_group.az_rg1.name
   depends_on          = [azurerm_virtual_network_gateway.az_vnet_gateway1]
+}
+
+data "google_compute_network" "myvpc" {
+  name = var.gcp_network
 }

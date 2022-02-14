@@ -1,11 +1,27 @@
 // GCP Specific VARs
-gcp_project_id = "optimum-battery-285721"
+gcp_project_id = "your-gcp-project-id-here"
 gcp_region     = "us-west1"
 gcp_zone       = "us-west1-b"
-// we're assuming this VPC has already been created...
-gcp_network = "default"
-gcp_bgp_asn = 64519
+gcp_network = "default2"
+// If the above network is not currently defined, let's try and build it
+// but its recommended that we use a VPC already built.
+gcp_build_vpc = true
+gcp_auto_create_subnetworks = true
+// Set below only if you want to create custom subnetworks withing your VPC
+// Otherwise, leave as an empty map. Eg:
+// gcp_subnetworks = {
+//  "us-west1" = "10.6.0.0/23"
+//  "us-central1" = "10.6.2.0/23"
+//  "us-west2" = "10.6.4.0/22"
+// }
 
+// The following can be set "REGIONAL" or "GLOBAL"
+// If REGIONAL, cloud router only advertises networks in the region in which it's built
+// Of GLOBAL, advertises all CIDRs known to the VPC
+// Only applies if building a new VPC, otherwise we're taking the settings already set
+// in the existing VPC
+gcp_routing_mode = "GLOBAL"
+gcp_bgp_asn = 64519
 // Only lowercase letters, numbers, hyphens allowed for next set of strings
 gcp_cloud_router = "gcp-cloudrouter1"
 gcp_gateway_name = "gcp-vpn-gateway"
@@ -27,12 +43,12 @@ az_bgp_apipa_ip0 = ["169.254.21.2"]
 az_bgp_apipa_ip1 = ["169.254.21.6"]
 
 // Azure Specific Resource Variables
-az_resource_group_name = "azrm_resource_group1"
+az_resource_group_name = "azrm_rg1"
 az_location            = "westus2"
-az_vnet_name           = "my_vnet1"
+az_vnet_name           = "vnet1"
 az_vnet_summaries      = ["10.1.0.0/16"]
 az_gateway_subnet      = ["10.1.0.0/24"]
-az_vnet_gateway_name   = "vnet_gateway"
+az_vnet_gateway_name   = "vnet1_gateway"
 az_bgp_asn             = 65515
 
 // See https://azure.microsoft.com/en-us/pricing/details/vpn-gateway/
