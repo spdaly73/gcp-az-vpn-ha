@@ -148,3 +148,21 @@ variable "az_bgp_remote_apipa_ip" {
   description = "Azure Remote VPN IP"
   type        = list(any)
 }
+
+variable "az_build_rg" {
+  description = "Build Azure Resource Group?"
+  type        = bool
+  default     = true
+}
+
+variable "az_build_vnet" {
+  description = "Build Azure VNET?"
+  type        = bool
+  default     = true
+}
+
+variable "az_build_gw_sn" {
+  description = "Build Azure Gateway Subnet?"
+  type        = bool
+  default     = true
+}

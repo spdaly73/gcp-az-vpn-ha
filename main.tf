@@ -18,6 +18,7 @@ resource "random_string" "random_key1" {
   number  = true
 }
 
+
 resource "google_compute_network" "vpc_network1" {
   count = var.gcp_build_vpc ? 1 : 0
   name                    = var.gcp_network
@@ -36,7 +37,7 @@ resource "google_compute_subnetwork" "custom_subnets1" {
 
 
 module "vpn_ha" {
-  depends_on = [data.google_compute_network.myvpc]
+  depends_on = [google_compute_network.vpc_network1]
   source     = "terraform-google-modules/vpn/google//modules/vpn_ha"
   project_id = var.gcp_project_id
   region     = var.gcp_region
@@ -88,37 +89,43 @@ module "vpn_ha" {
 // so I may make one if I get around to it
 // for now, we'll just use resource blocks
 resource "azurerm_resource_group" "az_rg1" {
+  count = var.az_build_rg ? 1 : 0
   name     = var.az_resource_group_name
   location = var.az_location
 }
 
 resource "azurerm_virtual_network" "az_vnet1" {
+  depends_on = [azurerm_resource_group.az_rg1]
+  count = var.az_build_vnet ? 1 : 0
   name                = var.az_vnet_name
-  location            = azurerm_resource_group.az_rg1.location
-  resource_group_name = azurerm_resource_group.az_rg1.name
+  location            = var.az_location
+  resource_group_name = var.az_resource_group_name
   address_space       = var.az_vnet_summaries
 }
 
 resource "azurerm_subnet" "azrm_gateway_subnet" {
+  depends_on = [azurerm_virtual_network.az_vnet1]
   // Hard-coded as "GatewaySubnet" to reserve in AZ for this purpose
   name                 = "GatewaySubnet"
-  resource_group_name  = azurerm_resource_group.az_rg1.name
-  virtual_network_name = azurerm_virtual_network.az_vnet1.name
+  resource_group_name  = var.az_resource_group_name
+  virtual_network_name = var.az_vnet_name
   address_prefixes     = var.az_gateway_subnet
 }
 
 resource "azurerm_public_ip" "az_gateway_pubip" {
+  depends_on = [azurerm_resource_group.az_rg1]
   count               = 2
   name                = "az_gateway_pubip${count.index}"
-  location            = azurerm_resource_group.az_rg1.location
-  resource_group_name = azurerm_resource_group.az_rg1.name
+  location            = var.az_location
+  resource_group_name = var.az_resource_group_name
   allocation_method   = "Dynamic"
 }
 
 resource "azurerm_virtual_network_gateway" "az_vnet_gateway1" {
+  depends_on = [azurerm_resource_group.az_rg1]
   name                = var.az_vnet_gateway_name
-  location            = azurerm_resource_group.az_rg1.location
-  resource_group_name = azurerm_resource_group.az_rg1.name
+  location            = var.az_location
+  resource_group_name = var.az_resource_group_name
   type                = "Vpn"
   vpn_type            = "RouteBased"
 
@@ -153,10 +160,11 @@ resource "azurerm_virtual_network_gateway" "az_vnet_gateway1" {
 }
 
 resource "azurerm_local_network_gateway" "az_peer_gtway" {
+  depends_on = [azurerm_resource_group.az_rg1]
   count               = 2
   name                = "${var.gcp_gateway_name}-peer${count.index}"
-  resource_group_name = azurerm_resource_group.az_rg1.name
-  location            = azurerm_resource_group.az_rg1.location
+  resource_group_name = var.az_resource_group_name
+  location            = var.az_location
   gateway_address     = module.vpn_ha.gateway[0].vpn_interfaces[count.index].ip_address
 
   // We can define specific CIDR's for advertisement to GCP
@@ -171,10 +179,11 @@ resource "azurerm_local_network_gateway" "az_peer_gtway" {
 }
 
 resource "azurerm_virtual_network_gateway_connection" "gtway_connection" {
+  depends_on = [azurerm_resource_group.az_rg1]
   count                      = 2
   name                       = "To-${var.gcp_gateway_name}-${count.index}"
-  location                   = azurerm_resource_group.az_rg1.location
-  resource_group_name        = azurerm_resource_group.az_rg1.name
+  location                   = var.az_location
+  resource_group_name        = var.az_resource_group_name
   type                       = "IPsec"
   virtual_network_gateway_id = azurerm_virtual_network_gateway.az_vnet_gateway1.id
   local_network_gateway_id   = azurerm_local_network_gateway.az_peer_gtway[count.index].id
@@ -206,16 +215,12 @@ resource "azurerm_virtual_network_gateway_connection" "gtway_connection" {
 // resource once assigned. Whew!
 data "azurerm_public_ip" "az_data_pubip0" {
   name                = azurerm_public_ip.az_gateway_pubip[0].name
-  resource_group_name = azurerm_resource_group.az_rg1.name
+  resource_group_name = var.az_resource_group_name
   depends_on          = [azurerm_virtual_network_gateway.az_vnet_gateway1]
 }
 
 data "azurerm_public_ip" "az_data_pubip1" {
   name                = azurerm_public_ip.az_gateway_pubip[1].name
-  resource_group_name = azurerm_resource_group.az_rg1.name
+  resource_group_name = var.az_resource_group_name
   depends_on          = [azurerm_virtual_network_gateway.az_vnet_gateway1]
-}
-
-data "google_compute_network" "myvpc" {
-  name = var.gcp_network
 }
