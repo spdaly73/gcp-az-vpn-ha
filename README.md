@@ -5,7 +5,7 @@ This is a Terraform script that builds redundant VPN connections between your GC
 I'm still very much a novice (IMO) when it comes to Terraform, so if you see something amiss, feel free to let me know. The main point of building this script is for my personal IaC development and training, so constructive direction is appreciated.
 
 #### Assumptions
-- Given that GCP builds a default auto mode VPC, but Azure really doesn't have a comparable feature, this script assumes we're connecting to the "default" GCP VPC, while we build an Azure Resource Group and VNET in the same script. If you want to connect something else besides the "default" VPC, this can be modified with the "gcp_network" variable, but the network must be already defined in your GCP project. I may change this behavior in a later version, but this is the expected behavior for now.
+- Given that GCP builds a default auto mode VPC, but Azure really doesn't have a comparable feature, this script assumes we're connecting to the "default" GCP VPC, while we build an Azure Resource Group and VNET in the same script. However, this default behavior can be modified, see variable definitions below.
 - BGP is enabled and we dynamically exchange all available CIDRs between VPC and VNET.
 - I don't include any means to authenticate to your particular cloud environments (nor would or should I know this). The assumption is you'll add any required credentials to the script.
 
@@ -26,7 +26,15 @@ This script has been tested with the following provider/module versions:
 - /README.md: The file that you're reading right now.
 
 #### Usage
-- See terraform.tfvars for the variable set, in which I think should be fairly self-explanitory. I've set some defaults where appropriate, but feel free to modify variables as needed to suit your network build for your particular environment.
+- See terraform.tfvars for the variable set, see descriptions below. I've set some defaults where appropriate, but feel free to modify variables as needed to suit your network build for your particular environment.
+
+#### Inputs
+
+| Variable Name | Description | Type | Default | Required? |
+| --- | --- | --- | --- | --- |
+| gcp_project_id | GCP Project ID | string | n/a | Y |
+| gcp_region | GCP Region | string | "us-central1" | N |
+| gcp_zone | GCP Zone (must be a valid zone within the region defined above) | string | "us-central-a" | N |
 
 #### Outputs
 - gcp_pubip0: GCP Public IP of Tunnel0
@@ -36,7 +44,8 @@ This script has been tested with the following provider/module versions:
 - shared_key: Shared key used to authenticate tunnels (sensitive=true)
 
 #### Version - This Script
-- Current: v0.1.1 - sucessfully tested with AzureRM 2.96, so this provider version has been updated
+- Current: v0.2 - Added functionality to create new GCP VPC and/or Azure VNET if specific variables are set (see inputs section)
+- v0.1.1 - sucessfully tested with AzureRM 2.96, so this provider version has been updated
 - v0.1 - original script
 
 #### Misc
