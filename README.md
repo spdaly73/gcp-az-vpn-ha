@@ -44,6 +44,14 @@ This script has been tested with the following provider/module versions:
 | gcp_cloud_router | Name of your GCP Cloud Router | string | "gcp-cloud-router" | N |
 | gcp_gateway_name | Name of your GCP VPN Gateway | string | "gcp-vpn-gateway" | N |
 | gcp_tunnel_name | Prefix naming for your GCP tunnel endpoints | string | "gcp-tunnel-" | N |
+| gcp_bgp_apipa_ip_nm0 | APIPA w/ netmask assigned to GCP tunnel0 | string | "169.254.21.1/30" | N |
+| gcp_bgp_apipa_ip_nm1 | APIPA w/ netmask assigned to GCP tunnel1 | string | "169.254.21.5/30" | N |
+| az_bgp_remote_apipa_ip | Represents a list of the above two strings without a netmask | list(string) | ["169.254.21.1", "169.254.21.5"] | N |
+| az_bgp_apipa_ip0 | IP Address of Azure Tunnel0 | list(string) (should be a single list item) | "169.254.21.2" | N |
+| az_bgp_apipa_ip1 | IP Address of Azure Tunnel1 | list(string) (should be a single list item) | "169.254.21.6" | N |
+
+
+
 
 
 
