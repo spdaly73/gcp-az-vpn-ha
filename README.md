@@ -40,10 +40,10 @@ This script has been tested with the following provider/module versions:
 | gcp_auto_create_subnetworks | Auto-create GCP subnetworks if building a new VPC | bool | true | N |
 | gcp_subnetworks | Defines custom GCP subnetworks if building a new VPC | map(string) { "region" = "subnet" } | empty set { } | N |
 | gcp_routing_mode | Defines REGIONAL or GLOBAL routing mode if building new VPC | string | "REGIONAL" | N |
-| gcp_bgp_asn | GCP BGP ASN (See GCP docs for valid private ASN options) | number | n/a | Y |
-| gcp_cloud_router | Name of your GCP Cloud Router | string | "cloudrouter1" | N |
-| gcp_gateway_name | Name of your GCP VPN Gateway | string | "gcp-vpn-Gateway" | N |
-| gcp_tunnel_name | Prefix naming for your GCP tunnel endpoints | string | "gcp-tunnel1" | N |
+| gcp_bgp_asn | GCP BGP ASN (See GCP docs for valid private ASN options) | number | 64519 | N |
+| gcp_cloud_router | Name of your GCP Cloud Router | string | "gcp-cloud-router" | N |
+| gcp_gateway_name | Name of your GCP VPN Gateway | string | "gcp-vpn-gateway" | N |
+| gcp_tunnel_name | Prefix naming for your GCP tunnel endpoints | string | "gcp-tunnel-" | N |
 
 
 
