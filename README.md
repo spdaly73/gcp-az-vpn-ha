@@ -34,7 +34,11 @@ This script has been tested with the following provider/module versions:
 | --- | --- | --- | --- | --- |
 | gcp_project_id | GCP Project ID | string | n/a | Y |
 | gcp_region | GCP Region | string | "us-central1" | N |
-| gcp_zone | GCP Zone (must be a valid zone within the region defined above) | string | "us-central-a" | N |
+| gcp_zone | GCP Zone (must be a valid zone within the region defined above) | string | "us-central1-a" | N |
+| gcp_network | GCP VPC name in which the Cloud VPN and router will be built | string | "default" | N |
+| gcp_build_vpc | Instruct Terraform to build the GPC VPC defined above (if not already built) | bool | false | N |
+| gcp_auto_create_subnetworks | Auto-create GCP subnetworks if building a new VPC | bool | true | N |
+| gcp_subnetworks | defines custom GCP subnetworks if building a new VPC | map(string) { "region" = "subnet" } | empty set { } | N
 
 #### Outputs
 - gcp_pubip0: GCP Public IP of Tunnel0
