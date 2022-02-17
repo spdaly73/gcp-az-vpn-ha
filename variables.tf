@@ -166,9 +166,3 @@ variable "az_build_vnet" {
   type        = bool
   default     = true
 }
-
-variable "az_build_gw_sn" {
-  description = "Build Azure Gateway Subnet?"
-  type        = bool
-  default     = true
-}
