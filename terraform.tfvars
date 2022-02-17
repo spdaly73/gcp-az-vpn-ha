@@ -1,11 +1,12 @@
 // GCP Specific VARs
+// you MUST modify this one var to fit your environment
 gcp_project_id = "your-gcp-project-id-here"
+
 gcp_region     = "us-west1"
-gcp_zone       = "us-west1-b"
+gcp_zone       = "us-west1-c"
 // Only lowercase letters, numbers, hyphens allowed for GCP network name
 gcp_network = "default"
 // If the above network is not currently defined, let's try and build it
-// but its recommended that we use a VPC already built.
 gcp_build_vpc = false
 gcp_auto_create_subnetworks = true
 // Set below only if you want to create custom subnets within your newly created VPC
@@ -53,9 +54,9 @@ az_location            = "westus2"
 az_build_vnet = true
 // If above variable set to false, the following var must match the name of a VNET already built
 az_vnet_name           = "vnet1"
-az_vnet_summaries      = ["10.1.0.0/16"]
+az_vnet_summaries      = ["10.64.0.0/16", "10.65.0.0/16"]
 
-az_gateway_subnet      = ["10.1.1.0/27"]
+az_gateway_subnet      = ["10.64.255.0/24"]
 az_vnet_gateway_name   = "vnet1_gateway"
 az_bgp_asn             = 65515
 
