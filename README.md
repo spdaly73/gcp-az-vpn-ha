@@ -49,7 +49,7 @@ This script has been tested with the following provider/module versions:
 | az_bgp_remote_apipa_ip | Represents a list of the above two strings without a netmask | list(string) | ["169.254.21.1", "169.254.21.5"] | N |
 | az_bgp_apipa_ip0 | IP Address of Azure Tunnel0 | list(string) (should be a single list item) | ["169.254.21.2"] | N |
 | az_bgp_apipa_ip1 | IP Address of Azure Tunnel1 | list(string) (should be a single list item) | ["169.254.21.6"] | N |
-| az_resource_group_name = "azrm_rg1"
+| az_resource_group_name | Azure Resource Group Name | string | "azrm_rg1" | N |
 | az_build_rg | Instruct Terraform to build the Azure Resource Group defined above (if not already built) | bool | true | N |
 | az_vnet_name | Azure VNET in which the gateway resources will be built | string | "vnet1" | N |
 | az_build_vnet | Instruct Terraform to build the Azure VNET defined above (if not already built) | bool | true | N |
