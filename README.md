@@ -58,7 +58,7 @@ This script has been tested with the following provider/module versions:
 | az_gateway_subnet | subnet reserved for Azure gateway (must be within VNET summary) | list(string) (should be a single list item) | ["10.64.255.0/24"] | N |
 | az_vnet_gateway_name | Azure VNET Gateway Name | string | "vnet1_gateway" | N |
 | az_bgp_asn | Azure BGP ASN (See Azure docs for valid private ASN options) | number | 65515 | N |
-| az_vnet_gateway_sku | Azure for gateway sizing and bandwidth | string | "VpnGw1" | N |
+| az_vnet_gateway_sku | Azure SKU for gateway sizing and bandwidth | string | "VpnGw1" | N |
 | tunnel_shared_secret | Shared key between cloud providers to authenticate IPSec tunnels (Random string generated is left blank) | string | "" | N |
 
 #### Outputs
