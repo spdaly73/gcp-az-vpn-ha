@@ -47,14 +47,17 @@ This script has been tested with the following provider/module versions:
 | gcp_bgp_apipa_ip_nm0 | APIPA w/ netmask assigned to GCP tunnel0 | string | "169.254.21.1/30" | N |
 | gcp_bgp_apipa_ip_nm1 | APIPA w/ netmask assigned to GCP tunnel1 | string | "169.254.21.5/30" | N |
 | az_bgp_remote_apipa_ip | Represents a list of the above two strings without a netmask | list(string) | ["169.254.21.1", "169.254.21.5"] | N |
-| az_bgp_apipa_ip0 | IP Address of Azure Tunnel0 | list(string) (should be a single list item) | "169.254.21.2" | N |
-| az_bgp_apipa_ip1 | IP Address of Azure Tunnel1 | list(string) (should be a single list item) | "169.254.21.6" | N |
-
-
-
-
-
-
+| az_bgp_apipa_ip0 | IP Address of Azure Tunnel0 | list(string) (should be a single list item) | ["169.254.21.2"] | N |
+| az_bgp_apipa_ip1 | IP Address of Azure Tunnel1 | list(string) (should be a single list item) | ["169.254.21.6"] | N |
+| az_resource_group_name = "azrm_rg1"
+| az_build_rg | Instruct Terraform to build the Azure Resource Group defined above (if not already built) | bool | true | N |
+| az_vnet_name | Azure VNET in which the gateway resources will be built | string | "vnet1" | N |
+| az_build_vnet | Instruct Terraform to build the Azure VNET defined above (if not already built) | bool | true | N |
+| az_location | Azure Region in which resources will be built | string | "westus2" | N |
+| az_vnet_summaries | CIDRs defined within Azure VNET (if not already built) | list(string) | ["10.64.0.0/16", "10.65.0.0/16"] | N |
+| az_gateway_subnet | subnet reserved for Azure gateway (must be within VNET summary) | list(string) (should be a single list item) | ["10.64.255.0/24"] | N |
+| az_vnet_gateway_name | Azure VNET Gateway Name | string | "vnet1_gateway"
+| az_bgp_asn | Azure BGP ASN (See Azure docs for valid private ASN options) | number | 65515 | N |
 
 #### Outputs
 - gcp_pubip0: GCP Public IP of Tunnel0
