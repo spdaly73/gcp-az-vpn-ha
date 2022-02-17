@@ -70,7 +70,7 @@ This script has been tested with the following provider/module versions:
 
 #### Version - This Script
 - Current: v0.2 - Added functionality to create new GCP VPC and/or Azure VNET if specific variables are set (see inputs section)
-- v0.1.1 - sucessfully tested with AzureRM 2.96, so this provider version has been updated
+- v0.1.1 - sucessfully tested with AzureRM 2.96, this version has been updated in the provider block. Script also confirmed broken in Azure v2.95, do not use this version.
 - v0.1 - original script
 
 #### Misc
