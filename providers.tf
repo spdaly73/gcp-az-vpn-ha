@@ -21,7 +21,7 @@ terraform {
 provider "google" {
   // if using a keyfile to authenticate to Google, you can uncomment below
   // and point to your valid file
-  //credentials = file("keys/key1.json")
+  // credentials = file("keys/key1.json")
   project = var.gcp_project_id
   region  = var.gcp_region
   zone    = var.gcp_zone
@@ -29,7 +29,7 @@ provider "google" {
 provider "google-beta" {
   // if using a keyfile to authenticate to Google, you can uncomment below
   // and point to your valid file
-  //credentials = file("keys/key1.json")
+  // credentials = file("keys/key1.json")
   project = var.gcp_project_id
   region  = var.gcp_region
   zone    = var.gcp_zone

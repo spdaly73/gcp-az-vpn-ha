@@ -5,7 +5,7 @@ This is a Terraform script that builds redundant VPN connections between your GC
 I'm still very much a novice (IMO) when it comes to Terraform, so if you see something amiss, feel free to let me know. The main point of building this script is for my personal IaC development and training, so constructive direction is appreciated.
 
 #### Assumptions
-- Given that GCP builds a default auto mode VPC, but Azure really doesn't have a comparable feature, this script assumes we're connecting to the "default" GCP VPC, while we build an Azure Resource Group and VNET in the same script. If you want to connect something else besides the "default" VPC, this can be modified with the "gcp_network" variable, but the network must be already defined in your GCP project. I may change this behavior in a later version, but this is the expected behavior for now.
+- Given that GCP builds a default auto mode VPC, but Azure really doesn't have a comparable feature, this script assumes we're connecting to the "default" GCP VPC, while we build an Azure Resource Group and VNET in the same script. However, this default behavior can now be modified, see variable definitions below.
 - BGP is enabled and we dynamically exchange all available CIDRs between VPC and VNET.
 - I don't include any means to authenticate to your particular cloud environments (nor would or should I know this). The assumption is you'll add any required credentials to the script.
 
@@ -26,7 +26,40 @@ This script has been tested with the following provider/module versions:
 - /README.md: The file that you're reading right now.
 
 #### Usage
-- See terraform.tfvars for the variable set, in which I think should be fairly self-explanitory. I've set some defaults where appropriate, but feel free to modify variables as needed to suit your network build for your particular environment.
+- See terraform.tfvars for the variable set, see descriptions below. I've set some defaults where appropriate, but feel free to modify variables as needed to suit your network build for your particular environment.
+
+#### Inputs
+
+| Variable Name | Description | Type | Default | Required? |
+| --- | --- | --- | --- | --- |
+| gcp_project_id | GCP Project ID | string | n/a | Y |
+| gcp_region | GCP Region | string | "us-central1" | N |
+| gcp_zone | GCP Zone (must be a valid zone within the region defined above) | string | "us-central1-a" | N |
+| gcp_network | GCP VPC name in which the Cloud VPN and router will be built | string | "default" | N |
+| gcp_build_vpc | Instruct Terraform to build the GPC VPC defined above (if not already built) | bool | false | N |
+| gcp_auto_create_subnetworks | Auto-create GCP subnetworks if building a new VPC | bool | true | N |
+| gcp_subnetworks | Defines custom GCP subnetworks if building a new VPC | map(string) { "region" = "subnet" } | empty set { } | N |
+| gcp_routing_mode | Defines REGIONAL or GLOBAL routing mode if building new VPC | string | "REGIONAL" | N |
+| gcp_bgp_asn | GCP BGP ASN (See GCP docs for valid private ASN options) | number | 64519 | N |
+| gcp_cloud_router | Name of your GCP Cloud Router | string | "gcp-cloud-router" | N |
+| gcp_gateway_name | Name of your GCP VPN Gateway | string | "gcp-vpn-gateway" | N |
+| gcp_tunnel_name | Prefix naming for your GCP tunnel endpoints | string | "gcp-tunnel-" | N |
+| gcp_bgp_apipa_ip_nm0 | APIPA w/ netmask assigned to GCP tunnel0 | string | "169.254.21.1/30" | N |
+| gcp_bgp_apipa_ip_nm1 | APIPA w/ netmask assigned to GCP tunnel1 | string | "169.254.21.5/30" | N |
+| az_bgp_remote_apipa_ip | Represents a list of the above two strings without a netmask | list(string) | ["169.254.21.1", "169.254.21.5"] | N |
+| az_bgp_apipa_ip0 | IP Address of Azure Tunnel0 | list(string) (should be a single list item) | ["169.254.21.2"] | N |
+| az_bgp_apipa_ip1 | IP Address of Azure Tunnel1 | list(string) (should be a single list item) | ["169.254.21.6"] | N |
+| az_resource_group_name | Azure Resource Group Name | string | "azrm_rg1" | N |
+| az_build_rg | Instruct Terraform to build the Azure Resource Group defined above (if not already built) | bool | true | N |
+| az_vnet_name | Azure VNET in which the gateway resources will be built | string | "vnet1" | N |
+| az_build_vnet | Instruct Terraform to build the Azure VNET defined above (if not already built) | bool | true | N |
+| az_location | Azure Region in which resources will be built | string | "westus2" | N |
+| az_vnet_summaries | CIDRs defined within Azure VNET (if not already built) | list(string) | ["10.64.0.0/16", "10.65.0.0/16"] | N |
+| az_gateway_subnet | subnet reserved for Azure gateway (must be within VNET summary) | list(string) (should be a single list item) | ["10.64.255.0/24"] | N |
+| az_vnet_gateway_name | Azure VNET Gateway Name | string | "vnet1_gateway" | N |
+| az_bgp_asn | Azure BGP ASN (See Azure docs for valid private ASN options) | number | 65515 | N |
+| az_vnet_gateway_sku | Azure for gateway sizing and bandwidth | string | "VpnGw1" | N |
+| tunnel_shared_secret | Shared key between cloud providers to authenticate IPSec tunnels (Random string generated is left blank) | string | "" | N |
 
 #### Outputs
 - gcp_pubip0: GCP Public IP of Tunnel0
@@ -36,7 +69,8 @@ This script has been tested with the following provider/module versions:
 - shared_key: Shared key used to authenticate tunnels (sensitive=true)
 
 #### Version - This Script
-- Current: v0.1.1 - sucessfully tested with AzureRM 2.96, so this provider version has been updated
+- Current: v0.2 - Added functionality to create new GCP VPC and/or Azure VNET if specific variables are set (see inputs section)
+- v0.1.1 - sucessfully tested with AzureRM 2.96, this version has been updated in the provider block. Script also confirmed broken in Azure v2.95, do not use this version.
 - v0.1 - original script
 
 #### Misc
