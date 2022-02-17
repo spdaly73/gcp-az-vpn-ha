@@ -56,7 +56,7 @@ This script has been tested with the following provider/module versions:
 | az_location | Azure Region in which resources will be built | string | "westus2" | N |
 | az_vnet_summaries | CIDRs defined within Azure VNET (if not already built) | list(string) | ["10.64.0.0/16", "10.65.0.0/16"] | N |
 | az_gateway_subnet | subnet reserved for Azure gateway (must be within VNET summary) | list(string) (should be a single list item) | ["10.64.255.0/24"] | N |
-| az_vnet_gateway_name | Azure VNET Gateway Name | string | "vnet1_gateway"
+| az_vnet_gateway_name | Azure VNET Gateway Name | string | "vnet1_gateway" | N |
 | az_bgp_asn | Azure BGP ASN (See Azure docs for valid private ASN options) | number | 65515 | N |
 
 #### Outputs
