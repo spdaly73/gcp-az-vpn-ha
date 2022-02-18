@@ -76,8 +76,8 @@ This script has been tested with the following provider/module versions:
 - v0.1 - original script
 
 #### Related Docs
-https://docs.microsoft.com/en-us/azure/vpn-gateway/vpn-gateway-about-vpngateways
-https://cloud.google.com/network-connectivity/docs/vpn/concepts/overview
+- https://docs.microsoft.com/en-us/azure/vpn-gateway/vpn-gateway-about-vpngateways
+- https://cloud.google.com/network-connectivity/docs/vpn/concepts/overview
 
 #### Misc
 See comments in the code for further banter/nonsense/explanations/direction.
