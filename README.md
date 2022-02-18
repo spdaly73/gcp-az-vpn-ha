@@ -75,5 +75,9 @@ This script has been tested with the following provider/module versions:
 - v0.1.1 - sucessfully tested with AzureRM 2.96, this version has been updated in the provider block. Script also confirmed broken in Azure v2.95, do not use this version.
 - v0.1 - original script
 
+#### Related Docs
+https://docs.microsoft.com/en-us/azure/vpn-gateway/vpn-gateway-about-vpngateways
+https://cloud.google.com/network-connectivity/docs/vpn/concepts/overview
+
 #### Misc
-See comments in main.tf for further banter/nonsense.
+See comments in the code for further banter/nonsense/explanations/direction.
