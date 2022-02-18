@@ -62,11 +62,13 @@ This script has been tested with the following provider/module versions:
 | tunnel_shared_secret | Shared key between cloud providers to authenticate IPSec tunnels (Random string generated is left blank) | string | "" | N |
 
 #### Outputs
-- gcp_pubip0: GCP Public IP of Tunnel0
-- gcp_pubip1: GCP Public IP of Tunnel1
-- az_pubip0: Azure Public IP of Tunnel0
-- az_pubip1: Azure Public IP of Tunnel1
-- shared_key: Shared key used to authenticate tunnels (sensitive=true)
+| Variable Name | Description |
+| --- | --- |
+| gcp_pubip0 | GCP Public IP of Tunnel0 |
+| gcp_pubip1 | GCP Public IP of Tunnel1 |
+| az_pubip0 | Azure Public IP of Tunnel0 |
+| az_pubip1 | Azure Public IP of Tunnel1 |
+| shared_key | Shared key used to authenticate tunnels (sensitive=true) | string |
 
 #### Version - This Script
 - Current: v0.2 - Added functionality to create new GCP VPC and/or Azure VNET if specific variables are set (see inputs section)
