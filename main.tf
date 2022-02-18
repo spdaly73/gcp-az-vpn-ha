@@ -20,15 +20,15 @@ resource "random_string" "random_key1" {
 
 
 resource "google_compute_network" "vpc_network1" {
-  count = var.gcp_build_vpc ? 1 : 0
+  count                   = var.gcp_build_vpc ? 1 : 0
   name                    = var.gcp_network
   auto_create_subnetworks = var.gcp_auto_create_subnetworks
-  routing_mode = var.gcp_routing_mode
+  routing_mode            = var.gcp_routing_mode
   // mtu                     = 1460
 }
 
 resource "google_compute_subnetwork" "custom_subnets1" {
-  for_each = var.gcp_subnetworks
+  for_each      = var.gcp_subnetworks
   name          = "${each.key}-subnet"
   ip_cidr_range = each.value
   region        = each.key
@@ -89,14 +89,14 @@ module "vpn_ha" {
 // so I may make one if I get around to it
 // for now, we'll just use resource blocks
 resource "azurerm_resource_group" "az_rg1" {
-  count = var.az_build_rg ? 1 : 0
+  count    = var.az_build_rg ? 1 : 0
   name     = var.az_resource_group_name
   location = var.az_location
 }
 
 resource "azurerm_virtual_network" "az_vnet1" {
-  depends_on = [azurerm_resource_group.az_rg1]
-  count = var.az_build_vnet ? 1 : 0
+  depends_on          = [azurerm_resource_group.az_rg1]
+  count               = var.az_build_vnet ? 1 : 0
   name                = var.az_vnet_name
   location            = var.az_location
   resource_group_name = var.az_resource_group_name
@@ -113,7 +113,7 @@ resource "azurerm_subnet" "azrm_gateway_subnet" {
 }
 
 resource "azurerm_public_ip" "az_gateway_pubip" {
-  depends_on = [azurerm_resource_group.az_rg1]
+  depends_on          = [azurerm_resource_group.az_rg1]
   count               = 2
   name                = "az_gateway_pubip${count.index}"
   location            = var.az_location
@@ -122,7 +122,7 @@ resource "azurerm_public_ip" "az_gateway_pubip" {
 }
 
 resource "azurerm_virtual_network_gateway" "az_vnet_gateway1" {
-  depends_on = [azurerm_resource_group.az_rg1]
+  depends_on          = [azurerm_resource_group.az_rg1]
   name                = var.az_vnet_gateway_name
   location            = var.az_location
   resource_group_name = var.az_resource_group_name
@@ -160,7 +160,7 @@ resource "azurerm_virtual_network_gateway" "az_vnet_gateway1" {
 }
 
 resource "azurerm_local_network_gateway" "az_peer_gtway" {
-  depends_on = [azurerm_resource_group.az_rg1]
+  depends_on          = [azurerm_resource_group.az_rg1]
   count               = 2
   name                = "${var.gcp_gateway_name}-peer${count.index}"
   resource_group_name = var.az_resource_group_name
@@ -179,7 +179,7 @@ resource "azurerm_local_network_gateway" "az_peer_gtway" {
 }
 
 resource "azurerm_virtual_network_gateway_connection" "gtway_connection" {
-  depends_on = [azurerm_resource_group.az_rg1]
+  depends_on                 = [azurerm_resource_group.az_rg1]
   count                      = 2
   name                       = "To-${var.gcp_gateway_name}-${count.index}"
   location                   = var.az_location

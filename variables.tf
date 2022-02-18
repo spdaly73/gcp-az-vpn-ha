@@ -33,7 +33,7 @@ variable "gcp_network" {
 variable "gcp_bgp_asn" {
   description = "GCP BGP ASN"
   type        = number
-  default = 64519
+  default     = 64519
 }
 
 variable "gcp_gateway_name" {
@@ -63,7 +63,7 @@ variable "gcp_auto_create_subnetworks" {
 variable "gcp_subnetworks" {
   description = "GCP Subnetworks Map (Region = Subnet)"
   type        = map(string)
-  default = { }
+  default     = {}
 }
 
 variable "gcp_routing_mode" {
@@ -123,36 +123,36 @@ variable "az_gateway_subnet" {
 variable "az_bgp_asn" {
   description = "Azure BGP ASN"
   type        = number
-  default = 	65515
+  default     = 65515
 }
 variable "az_bgp_apipa_ip0" {
   description = "Azure BGP APIPA - first tunnel"
   type        = list(any)
-  default = ["169.254.21.2"]
+  default     = ["169.254.21.2"]
 }
 
 variable "az_bgp_apipa_ip1" {
   description = "Azure BGP APIPA - second tunnel"
   type        = list(any)
-  default = ["169.254.21.6"]
+  default     = ["169.254.21.6"]
 }
 
 variable "gcp_bgp_apipa_ip_nm0" {
   description = "GCP BGP APIPA w/ Netmask - first tunnel"
   type        = string
-  default = "169.254.21.1/30"
+  default     = "169.254.21.1/30"
 }
 
 variable "gcp_bgp_apipa_ip_nm1" {
   description = "GCP BGP APIPA w/ Netmask - second tunnel"
   type        = string
-  default = "169.254.21.5/30"
+  default     = "169.254.21.5/30"
 }
 
 variable "az_bgp_remote_apipa_ip" {
   description = "Azure Remote VPN IP"
   type        = list(string)
-  default = ["169.254.21.1", "169.254.21.5"]
+  default     = ["169.254.21.1", "169.254.21.5"]
 }
 
 variable "az_build_rg" {

@@ -2,12 +2,12 @@
 // you MUST modify this one var to fit your environment
 gcp_project_id = "your-gcp-project-id-here"
 
-gcp_region     = "us-west1"
-gcp_zone       = "us-west1-c"
+gcp_region = "us-west1"
+gcp_zone   = "us-west1-c"
 // Only lowercase letters, numbers, hyphens allowed for GCP network name
 gcp_network = "default"
 // If the above network is not currently defined, let's try and build it
-gcp_build_vpc = false
+gcp_build_vpc               = false
 gcp_auto_create_subnetworks = true
 // Set below only if you want to create custom subnets within your newly created VPC
 // Otherwise, leave as an empty map (default). Eg:
@@ -16,7 +16,7 @@ gcp_auto_create_subnetworks = true
 //  "us-central1" = "10.6.2.0/23"
 //  "us-west2" = "10.6.4.0/22"
 // }
-gcp_subnetworks = { }
+gcp_subnetworks = {}
 
 // The following can be set "REGIONAL" or "GLOBAL"
 // If REGIONAL, cloud router only advertises networks in the region in which it's built
@@ -24,7 +24,7 @@ gcp_subnetworks = { }
 // Only applies if building a new VPC, otherwise we're taking the settings already set
 // in the existing VPC
 gcp_routing_mode = "GLOBAL"
-gcp_bgp_asn = 64519
+gcp_bgp_asn      = 64519
 // Only lowercase letters, numbers, hyphens allowed for next set of strings
 gcp_cloud_router = "gcp-cloudrouter1"
 gcp_gateway_name = "gcp-vpn-gateway"
@@ -53,12 +53,12 @@ az_location            = "westus2"
 
 az_build_vnet = true
 // If above variable set to false, the following var must match the name of a VNET already built
-az_vnet_name           = "vnet1"
-az_vnet_summaries      = ["10.64.0.0/16", "10.65.0.0/16"]
+az_vnet_name      = "vnet1"
+az_vnet_summaries = ["10.64.0.0/16", "10.65.0.0/16"]
 
-az_gateway_subnet      = ["10.64.255.0/24"]
-az_vnet_gateway_name   = "vnet1_gateway"
-az_bgp_asn             = 65515
+az_gateway_subnet    = ["10.64.255.0/24"]
+az_vnet_gateway_name = "vnet1_gateway"
+az_bgp_asn           = 65515
 
 // See https://azure.microsoft.com/en-us/pricing/details/vpn-gateway/
 // for SKU options. Because we're using BGP, "Basic" cannot be used.
