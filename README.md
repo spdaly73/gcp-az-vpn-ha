@@ -74,4 +74,4 @@ This script has been tested with the following provider/module versions:
 - v0.1 - original script
 
 #### Misc
-I'm a little surpised that I didn't find an Azure VPN module in the Terraform Registry, so I'm considering creating one for my next 'project'. For now, I'm using base Azure RM resource blocks; see comments in main.tf for further banter/nonsense.
+I didn't find a stand-alone Azure VPN gateway module in the Terraform Registry, so I'm considering creating one for my next project. For now, I'm using Azure RM resource blocks; see comments in main.tf for further banter/nonsense.
