@@ -15,7 +15,7 @@ This script has been tested with the following provider/module versions:
 - Azurerm: = 2.91, = 2.93, = 2.96  (do not use with 2.95, the script breaks with this version)
 - Google, Google-beta: = 4.10
 - Random (for shared secret generation): = 3.1
-- terraform-google-modules/modules/vpn_ha: = 2.2  https://github.com/terraform-google-modules/terraform-google-vpn/tree/master/modules/vpn_ha
+- [terraform-google-modules/modules/vpn_ha](https://github.com/terraform-google-modules/terraform-google-vpn/tree/master/modules/vpn_ha) : = 2.2
 
 #### Files
 - /providers.tf: Provider blocks.
