@@ -2,7 +2,7 @@
 This is a Terraform script that builds redundant VPN connections between your GCP VPC and Azure VNET, as well as exchange routes via BGP
 
 #### Disclaimer
-I'm still very much a novice (IMO) when it comes to Terraform, so if you see something amiss, feel free to let me know. The main point of building this script is for my personal IaC development and training, so constructive direction is appreciated.
+The main point of building this script is for my personal IaC development and training, so constructive direction is appreciated.
 
 #### Assumptions
 - Given that GCP builds a default auto mode VPC, but Azure really doesn't have a comparable feature, this script assumes we're connecting to the "default" GCP VPC, while we build an Azure Resource Group and VNET in the same script. However, this default behavior can now be modified, see variable definitions below.
