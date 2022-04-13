@@ -7,7 +7,7 @@ The main point of building this script is for my personal IaC development and tr
 #### Assumptions
 - Given that GCP builds a default auto mode VPC, but Azure really doesn't have a comparable feature, this script assumes we're connecting to the "default" GCP VPC, while we build an Azure Resource Group and VNET in the same script. However, this default behavior can now be modified, see variable definitions below.
 - BGP is enabled and we dynamically exchange all available CIDRs between VPC and VNET.
-- I don't include any means to authenticate to your particular cloud environments (nor would or should I know this). The assumption is you'll add any required credentials to the script.
+- You'll add any required credentials to the script.
 
 #### Compatibility
 This script has been tested with the following provider/module versions:
